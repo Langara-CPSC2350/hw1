@@ -7,3 +7,5 @@ This is CPSC2350 project
 ### Team member
 
 Ryutaro Teruya
+
+Amir Ghiam
