@@ -9,3 +9,5 @@ This is CPSC2350 project
 Ryutaro Teruya
 
 Amir Ghiam
+
+Frayan Foroughi
