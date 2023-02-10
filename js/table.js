@@ -60,7 +60,44 @@ export default class  {
 
   importData(data){
     const tableRow = [];
-    //Input Hamilton's Apportionment Algorithm here:
+    let totalPop = 0;
+    for(let i = 0; i < data.length; i++) {
+      totalPop += parseInt(data[i][1]);
+    }
+    console.log(totalPop)
+    let numOfRep = document.getElementById("numOfRep").value;
+    let numOfRepVal = parseInt(numOfRep);
+
+    let avgPopPerRep = totalPop/numOfRepVal;
+
+    for(let j = 0; j < data.length; j++) {
+      let totalNumOfRep = data[j][1]/avgPopPerRep;
+      data[j].push(Math.floor(totalNumOfRep));
+    }
+    
+    let finalNum = 0;
+    for(let i = 0; i < data.length; i++) {
+      finalNum += data[i][2];
+    }
+
+    let remainderArray = [];
+
+    for(let x = 1; x < data.length; x++) {
+      remainderArray.push(data[x][1]%avgPopPerRep);
+    }
+
+    let missingReps = numOfRepVal - finalNum;
+    let max = 0;
+    let maxIndex = 0;
+    for(let y = 0; y < missingReps; y++) {
+      for(let e = 1; e < data.length; e++) {
+        if(remainderArray[e] > max) {
+          maxIndex = e;
+          max = remainderArray[e];
+        }
+      }
+      data[maxIndex][2]++;
+    }
     data.sort();
     for (let row of data) {
       tableRow.push(`
