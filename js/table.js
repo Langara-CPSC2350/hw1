@@ -64,7 +64,7 @@ export default class  {
     for(let i = 0; i < data.length; i++) {
       totalPop += parseInt(data[i][1]);
     }
-    console.log(totalPop)
+
     let numOfRep = document.getElementById("numOfRep").value;
     let numOfRepVal = parseInt(numOfRep);
 
