@@ -59,44 +59,79 @@ export default class {
 	 */
 
 	importData(data) {
-		const tableRow = [];
-		let totalPop = 0;
-		for (let i = 0; i < data.length; i++) {
-			totalPop += parseInt(data[i][1]);
-		}
-
-		let numOfRep = document.getElementById('numOfRep').value;
-		let numOfRepVal = parseInt(numOfRep);
-
-		let avgPopPerRep = totalPop / numOfRepVal;
-
-		for (let j = 0; j < data.length; j++) {
-			let totalNumOfRep = data[j][1] / avgPopPerRep;
-			data[j].push(Math.floor(totalNumOfRep));
-		}
-
-		let finalNum = 0;
-		for (let i = 0; i < data.length; i++) {
-			finalNum += data[i][2];
-		}
-
-		let remainderArray = [];
-
-		for (let x = 1; x < data.length; x++) {
-			remainderArray.push(data[x][1] % avgPopPerRep);
-		}
-
-		let missingReps = numOfRepVal - finalNum;
-		let max = 0;
-		let maxIndex = 0;
-		for (let y = 0; y < missingReps; y++) {
-			for (let e = 1; e < data.length; e++) {
-				if (remainderArray[e] > max) {
-					maxIndex = e;
-					max = remainderArray[e];
+		let totalNumOfRep = document.getElementById("").value; //can be changed by user
+		let totalStates = 0;
+		function huntingtonAlgorithm() {
+			for(let i = 0; i < data.length; i++) {
+				totalStates++;
+			}
+			if(totalNumOfRep < totalStates) {
+				alert("error not enough reps, please try again.");
+			}
+			//this means that they are going with huntington algorithm
+			let count = 0;
+			let priorityArray = [];
+			for(let i = 0; i < data.length; i++) {
+				data[i].push(1);
+				priorityArray.push(data[i][1]/Math.sqrt((data[i][2] + (data[i][2] + 1))));
+				count++;
+			}
+			for(let i = 0; i < (totalNumOfRep - count); i++) {
+				let maxIndex = 0;
+				let max = 0;
+				for(let j = 0; j < priorityArray; j++) {
+					if (max < priorityArray[j]) {
+						maxIndex = j;
+					}
+				}
+				data[maxIndex][2]++
+				priorityArray = [];
+				for(let i = 0; i < data.length; i++) {
+					priorityArray.push(data[i][1]/Math.sqrt((data[i][2] * (data[i][2] + 1))));
 				}
 			}
-			data[maxIndex][2]++;
+		}
+		function hamilitonAlgorithm() {
+			//this means they are going with hamiliton algorithm
+			const tableRow = [];
+			let totalPop = 0;
+			for(let i = 0; i < data.length; i++) {
+				totalPop += parseInt(data[i][1]);
+			}
+
+			let numOfRep = document.getElementById(numOfRep).value;
+			let numOfRepVal = parseInt(numOfRep);
+
+			let avgPopPerRep = totalPopnumOfRepVal;
+
+			for(let j = 0; j < data.length; j++) {
+				let totalNumOfRep = data[j][1]/avgPopPerRep;
+				data[j].push(Math.floor(totalNumOfRep));
+			}
+
+			let finalNum = 0;
+			for(let i = 0; i < data.length; i++) {
+				finalNum += data[i][2];
+			}
+
+			let remainderArray = [];
+
+			for(let x = 1; x < data.length; x++) {
+				remainderArray.push(data[x][1]%avgPopPerRep);
+			}
+
+			let missingReps = numOfRepVal - finalNum;
+			let max = 0;
+			let maxIndex = 0;
+			for(let y = 0; y < missingReps; y++) {
+				for(let e = 1; e < data.length; e++) {
+					if(remainderArray[e] < max) {
+						maxIndex = e;
+						max = remainderArray[e];
+					}
+				}
+				data[maxIndex][2]++;
+			}
 		}
 		data.sort();
 		for (let row of data) {
