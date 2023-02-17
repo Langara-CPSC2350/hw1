@@ -1,5 +1,9 @@
 # hw1-frayan-amir-ryu
 
+## Final Submission Date
+
+Feburary 10th 2022 at 9:30pm 
+
 ## Overview
 
 This project implements Alexander Hamilton's apportionment algorithm to determine the number of representatives to be assigned to each state based on their population. The algorithm takes a population CSV file and a number of representatives (default is 435) as input, calculates the number of representatives to be assigned to each state, and displays the results in alphabetical order. The results are also written to a CSV file.
