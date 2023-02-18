@@ -80,17 +80,21 @@ export default class {
 		for (let i = 0; i < data.length; i++) {
 			totalStates++;
 		}
+		/**
+		 * Purpose: If else statement holds the two algorithms necessary to calculate the representatives for each state
+		 * if user does not input enough representatives (total states is larger than rep count) then the program will not work
+		 */
 		if (numOfRepVal < totalStates) {
 			alert("error: Not enough representatives, please try again");
 		} else {
 			const tableRow = [];
 			if (userChoice === 0) {
 				//this means that they are going with huntington algorithm
-					let count = 0;
-					let priorityArray = [];
+					let count = 0; //this allows us to check how many states have already been given a representatives before giving out the remainders
+					let priorityArray = []; //create to store each priority value of each state
 					for (let i = 0; i < data.length; i++) {
 						data[i].push(1);
-						priorityArray.push(data[i][1] / Math.sqrt((data[i][2] * (data[i][2] + 1))));
+						priorityArray.push(data[i][1] / Math.sqrt((data[i][2] * (data[i][2] + 1)))); //this code is the formula given to us
 						count++;
 					}
 					for (let i = 0; i < (numOfRep - count); i++) {
@@ -102,14 +106,14 @@ export default class {
 								max = priorityArray[j];
 							}
 						}
-						data[maxIndex][2]++
+						data[maxIndex][2]++ //adds one representative to the state
 						priorityArray = [];
 						for (let i = 0; i < data.length; i++) {
-							priorityArray.push(data[i][1] / Math.sqrt((data[i][2] * (data[i][2] + 1))));
+							priorityArray.push(data[i][1] / Math.sqrt((data[i][2] * (data[i][2] + 1)))); //this is the formula code
 						}
 					}
 			} else {
-				// this means they are going with hamiliton algorithm
+				// this means they are going with Hamiliton algorithm
 				let totalPop = 0;
 				for (let i = 0; i < data.length; i++) {
 					totalPop += parseInt(data[i][1]);
@@ -119,7 +123,7 @@ export default class {
 
 				for (let j = 0; j < data.length; j++) {
 					let totalNumOfRep = data[j][1] / avgPopPerRep;
-					data[j].push(Math.floor(totalNumOfRep));
+					data[j].push(Math.floor(totalNumOfRep)); //push total into data array
 				}
 
 				let finalNum = 0;
@@ -127,13 +131,13 @@ export default class {
 					finalNum += data[i][2];
 				}
 
-				let remainderArray = [];
+				let remainderArray = []; //this stores the remainder of each state population
 
 				for (let x = 1; x < data.length; x++) {
 					remainderArray.push(data[x][1] % avgPopPerRep);
 				}
 
-				let missingReps = numOfRepVal - finalNum;
+				let missingReps = numOfRepVal - finalNum; //the remaining reps that need to be added to states
 				let max = 0;
 				let maxIndex = 0;
 				for (let y = 0; y < missingReps; y++) {
@@ -143,7 +147,7 @@ export default class {
 							max = remainderArray[e];
 						}
 					}
-					data[maxIndex][2]++;
+					data[maxIndex][2]++; //adds one representative to the state
 				}
 			}
 			data.sort();
