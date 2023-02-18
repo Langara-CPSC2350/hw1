@@ -4,41 +4,50 @@
   <meta charset="UTF-8">
   <title>Assignment 1</title>
   <style>
+
     body{
       text-align: center;
       background-color: bisque;
       font-family: sans-serif, serif;
     }
+
     #csvFile{
       margin-left: auto;
       margin-right: auto;
     }
+
     table {
       font-family: Arial, sans-serif;
       border-collapse: collapse;
       width: 50%;
     }
+
     td, th {
       border: 1px solid black;
       text-align: left;
     }
+
     tr:nth-child(even){
       background-color: lightblue;
     }
+
     #csvInput {
       padding-bottom: 10px;
     }
+
   </style>
 </head>
 <body>
 
-
 <!-- Input field for user to upload .csv File -->
 <form>
   <label>Number Of Representatives: </label>
-  <input type="number" id="numOfRep" value="450" placeholder="optional" > <br>
+  <input type="number" id="numOfRep" value="450" placeholder="optional"> <br>
   <label>Select a CSV file: </label>
-  <input type="file" id="csvInput" accept=".csv">
+  <input type="file" id="csvInput" accept=".csv"> <br>
+  <label>Select Algorithm: </label> <br>
+  <input type="button" value="Hamilton Algorithm" id="hamilton"><br>
+  <input type="button" value="Huntington Algorithm" id="huntington">
 </form>
 <!-- Table where CSV file will be visible -->
 <table id="csvFile"></table>
