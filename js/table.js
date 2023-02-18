@@ -2,7 +2,23 @@
  * Using es6 template strings for data.
  *
  */
+let userChoice;
+function pick(choice) {
+	userChoice = choice;
+	console.log("This is userchoice" + userChoice);
+}
 
+let button1 = document.getElementById("hamilton");
+
+button1.addEventListener("click", evt =>{
+	pick(1);
+})
+
+let button2 = document.getElementById("huntington");
+
+button2.addEventListener("click", evt =>{
+	pick(0);
+})
 export default class {
 	/**
 	 * @param tableElm This will display the CSV data on the table.
@@ -59,50 +75,51 @@ export default class {
 	 */
 
 	importData(data) {
-		let totalNumOfRep = document.getElementById("").value; //can be changed by user
+		console.log("onload");
+		const tableRow = [];
+		let numOfRep = document.getElementById("numOfRep").value;
+		let numOfRepVal = parseInt(numOfRep);
 		let totalStates = 0;
-		function huntingtonAlgorithm() {
+		if(userChoice === 0) {
+			console.log("test1");
+			//this means that they are going with huntington algorithm
 			for(let i = 0; i < data.length; i++) {
 				totalStates++;
 			}
-			if(totalNumOfRep < totalStates) {
-				alert("error not enough reps, please try again.");
-			}
-			//this means that they are going with huntington algorithm
-			let count = 0;
-			let priorityArray = [];
-			for(let i = 0; i < data.length; i++) {
-				data[i].push(1);
-				priorityArray.push(data[i][1]/Math.sqrt((data[i][2] + (data[i][2] + 1))));
-				count++;
-			}
-			for(let i = 0; i < (totalNumOfRep - count); i++) {
-				let maxIndex = 0;
-				let max = 0;
-				for(let j = 0; j < priorityArray; j++) {
-					if (max < priorityArray[j]) {
-						maxIndex = j;
+			if(numOfRep < totalStates) {
+				alert("error: not enough reps, please try again.");
+			} else {
+				let count = 0;
+				let priorityArray = [];
+				for(let i = 0; i < data.length; i++) {
+					data[i].push(1);
+					priorityArray.push(data[i][1]/Math.sqrt((data[i][2] * (data[i][2] + 1))));
+					count++;
+				}
+				for(let i = 0; i < (numOfRep - count); i++) {
+					let maxIndex = 0;
+					let max = 0;
+					for(let j = 0; j < priorityArray; j++) {
+						if (max < priorityArray[j]) {
+							maxIndex = j;
+						}
+					}
+					data[maxIndex][2]++
+					priorityArray = [];
+					for(let i = 0; i < data.length; i++) {
+						priorityArray.push(data[i][1]/Math.sqrt((data[i][2] * (data[i][2] + 1))));
 					}
 				}
-				data[maxIndex][2]++
-				priorityArray = [];
-				for(let i = 0; i < data.length; i++) {
-					priorityArray.push(data[i][1]/Math.sqrt((data[i][2] * (data[i][2] + 1))));
-				}
 			}
-		}
-		function hamilitonAlgorithm() {
-			//this means they are going with hamiliton algorithm
-			const tableRow = [];
+		} else {
+			// this means they are going with hamiliton algorithm
+			console.log("test2");
 			let totalPop = 0;
 			for(let i = 0; i < data.length; i++) {
 				totalPop += parseInt(data[i][1]);
 			}
 
-			let numOfRep = document.getElementById(numOfRep).value;
-			let numOfRepVal = parseInt(numOfRep);
-
-			let avgPopPerRep = totalPopnumOfRepVal;
+			let avgPopPerRep = totalPop/numOfRepVal;
 
 			for(let j = 0; j < data.length; j++) {
 				let totalNumOfRep = data[j][1]/avgPopPerRep;
@@ -125,7 +142,7 @@ export default class {
 			let maxIndex = 0;
 			for(let y = 0; y < missingReps; y++) {
 				for(let e = 1; e < data.length; e++) {
-					if(remainderArray[e] < max) {
+					if(remainderArray[e] > max) {
 						maxIndex = e;
 						max = remainderArray[e];
 					}
