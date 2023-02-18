@@ -3,6 +3,10 @@
  *
  */
 let userChoice;
+let error = false;
+let numOfRep = document.getElementById("numOfRep").value;
+let numOfRepVal = parseInt(numOfRep);
+let totalStates = 0;
 function pick(choice) {
 	userChoice = choice;
 	console.log("This is userchoice" + userChoice);
@@ -35,9 +39,9 @@ export default class {
 	 * @param headerC Headers Column.
 	 */
 
+
 	updateList(data, headerC) {
 		let common = ['Representatives'];
-
 		this.removeList();
 		this.createHead(headerC, common);
 		this.importData(data);
@@ -75,19 +79,15 @@ export default class {
 	 */
 
 	importData(data) {
-		console.log("onload");
 		const tableRow = [];
-		let numOfRep = document.getElementById("numOfRep").value;
-		let numOfRepVal = parseInt(numOfRep);
-		let totalStates = 0;
 		if(userChoice === 0) {
-			console.log("test1");
 			//this means that they are going with huntington algorithm
 			for(let i = 0; i < data.length; i++) {
 				totalStates++;
 			}
-			if(numOfRep < totalStates) {
+			if(numOfRepVal < totalStates) {
 				alert("error: not enough reps, please try again.");
+				error = true;
 			} else {
 				let count = 0;
 				let priorityArray = [];
@@ -99,9 +99,10 @@ export default class {
 				for(let i = 0; i < (numOfRep - count); i++) {
 					let maxIndex = 0;
 					let max = 0;
-					for(let j = 0; j < priorityArray; j++) {
+					for(let j = 0; j < priorityArray.length; j++) {
 						if (max < priorityArray[j]) {
 							maxIndex = j;
+							max = priorityArray[j];
 						}
 					}
 					data[maxIndex][2]++
@@ -113,7 +114,6 @@ export default class {
 			}
 		} else {
 			// this means they are going with hamiliton algorithm
-			console.log("test2");
 			let totalPop = 0;
 			for(let i = 0; i < data.length; i++) {
 				totalPop += parseInt(data[i][1]);
